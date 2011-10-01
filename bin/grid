@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'gridcli'
+
+GridCLI::Runner.run ARGV.clone
