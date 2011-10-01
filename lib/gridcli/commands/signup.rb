@@ -2,10 +2,6 @@ module GridCLI
   class SignupCommand < BaseCommand
     def initialize
       super "signup", "Create an account on the grid"
-      #default_opts = { :privkey => "~/.ssh/id_rsa", :pubkey => "~/.ssh/id_rsa.pub" }
-      #super "signup", "Create an account on the grid", default_opts
-      # @optp.on("--private-key path", "Location of id_rsa file") { |key| @opts[:privkey] = key }
-      # @optp.on("--public-key path", "Location of id_rsa.pub file") { |key| @opts[:pubkey] = key }
     end
 
     def usage
@@ -18,14 +14,16 @@ module GridCLI
       username = args.shift
       parse_opts args
 
-      if @config["token"].nil?
-        @config["token"] = Crypt.generate_token(username)
-        @config.save
+      @config["username"] = username
+      @config.save
+      
+      begin
+        log "Trying to create new user with name '#{username}'"
+        User.new(:username => username, :token => @config['token']).save
+        puts "New user created.  You are now known as '#{username}'"
+      rescue ActiveResource::ClientError
+        puts "Sorry, username '#{username}' already exists."
       end
-        
-
-      public_key = Crypt.public_key      
-      puts "#{username} #{@config['token']} #{public_key}"
     end
   end
 

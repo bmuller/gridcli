@@ -10,11 +10,11 @@ end
 
 require 'gridcli/version'
 require 'gridcli/runner'
-require 'gridcli/crypt'
 
 require 'gridcli/commands/base'
 require 'gridcli/commands/signup'
 require 'gridcli/commands/help'
+require 'gridcli/commands/profile'
 
 require 'gridcli/resources/base'
 require 'gridcli/resources/user'

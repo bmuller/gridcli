@@ -20,8 +20,7 @@ module GridCLI
     def default_config
       { 
         'site' => "http://savorthegrid.com:3000",
-        'privatekey' => "~/.ssh/id_rsa",
-        'publickey' => "~/.ssh/id_rsa.pub"
+        'token' => rand(36**31).to_s(36)
       }
     end
 
