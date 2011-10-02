@@ -15,7 +15,10 @@ require 'gridcli/commands/base'
 require 'gridcli/commands/signup'
 require 'gridcli/commands/help'
 require 'gridcli/commands/profile'
+require 'gridcli/commands/befriend'
+require 'gridcli/commands/friends'
 
 require 'gridcli/resources/base'
 require 'gridcli/resources/user'
+require 'gridcli/resources/friendship'
 

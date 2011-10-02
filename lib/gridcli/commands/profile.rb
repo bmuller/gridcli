@@ -2,9 +2,14 @@ module GridCLI
   class ProfileCommand < BaseCommand
     def initialize
       super "profile", "Show profile information for other users or update own profile", { :update => false }
-      @optp.on("--github-user username", "Set your username on github") { |u| @opts[:github_username] = u }
-      @optp.on("--name fullname", "Set your full name") { |u| @opts[:name] = u }
-      @optp.on("--update", "Set values for your profile") { |u| @opts[:update] = u }
+      add_option("--github-user username", "Set your username on github") { |u| 
+        @opts[:github_username] = u 
+        @opts[:update] = true
+      }
+      add_option("--name fullname", "Set your full name") { |u| 
+        @opts[:name] = u
+        @opts[:update] = true
+      }
     end
 
     def usage
@@ -12,7 +17,7 @@ module GridCLI
     end
 
     def run(args)
-      username = args.length == 0 ? @config['username'] : args.shift
+      username = (args.length == 0 || args.first.start_with?('-')) ? @config['username'] : args.shift
       parse_opts args
 
       begin
@@ -26,14 +31,13 @@ module GridCLI
         return
       end
 
+      # if we're supposed to update, do so
       if @opts[:update]
-        attrs = {}
-        [:github_username, :name].each { |n| attrs[n] = @opts[n] unless @opts[n].nil? }
+        [:github_username, :name].each { |n| user.send("#{n.to_s}=", @opts[n]) }
         user.id = username
-        user.update_attributes(attrs)
+        user.save
       end
-      puts user.encode
-      puts user.username
+
       puts user
     end
   end

@@ -13,7 +13,7 @@ module GridCLI
       puts "Usage: grid <cmd>\n\nAvailable commands:\n\n"
       Runner.commands.each { |klass|
         inst = klass.new
-        puts "\t#{inst.cmd}\t#{inst.desc}"
+        puts "\t#{inst.cmd}\t\t#{inst.desc}"
       }
       puts "\n\nTo get the options for any individual command, use:"
       puts "\tgrid help <cmd>\n\n"

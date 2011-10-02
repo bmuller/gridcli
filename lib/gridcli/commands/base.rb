@@ -14,6 +14,10 @@ module GridCLI
       }
     end
 
+    def add_option(*args) 
+      @optp.on(*args) { |u| yield u }
+    end
+
     def usage(cmd_opts=nil)
       cmd_opts ||= ""
       @optp.banner = "Usage: grid #{@cmd} #{cmd_opts} [options]"
