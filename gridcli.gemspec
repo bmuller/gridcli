@@ -7,8 +7,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Brian Muller"]
   s.email       = ["bamuller@gmail.com"]
   s.homepage    = ""
-  s.summary     = "A command line interface to The Grid"
-  s.description = "A command line interface to The Grid"
+  s.summary     = "A command line interface to The Grid: Social Networking, Web 0.2"
+  s.description = "A command line interface to The Grid: Social Networking, Web 0.2"
   s.rubyforge_project = "gridcli"
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

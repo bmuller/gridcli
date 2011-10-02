@@ -1,10 +1,17 @@
 require 'active_resource'
 
-module GridCLI
-  autoload :Config, 'gridcli/config'
+require 'gridcli/storage/base'
+require 'gridcli/storage/files'
 
+require 'gridcli/config'
+
+module GridCLI
   def self.config
     @config ||= Config.new
+  end
+  
+  def self.storage
+    @storage ||= FileStorage.new
   end
 end
 
@@ -21,6 +28,7 @@ require 'gridcli/commands/message'
 require 'gridcli/commands/status'
 require 'gridcli/commands/like'
 require 'gridcli/commands/dislike'
+require 'gridcli/commands/update'
 
 require 'gridcli/resources/base'
 require 'gridcli/resources/user'

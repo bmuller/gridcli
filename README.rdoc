@@ -36,6 +36,7 @@ To send a status update, like, or dislike to your friends:
   grid dislike <dislike message>
 
 = To Do
+  grid block <user>
   grid list likes [<count>]
   grid search <type | 'all'> "ruby gem" yesterday
   grid update
