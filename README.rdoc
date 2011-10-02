@@ -35,8 +35,16 @@ To send a status update, like, or dislike to your friends:
   grid like <like message>
   grid dislike <dislike message>
 
+== Updating
+To update all messages / likes / dislikes / etc, run:
+  grid update
+
+== Searching
+You can search any type (or all types) for something.  Will eventually use Chronic to allow users to specify when to search.
+  grid search <like|dislike|message|status|all> "ruby gem"
+
 = To Do
   grid block <user>
   grid list likes [<count>]
-  grid search <type | 'all'> "ruby gem" yesterday
-  grid update
+
+

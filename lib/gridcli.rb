@@ -29,6 +29,7 @@ require 'gridcli/commands/status'
 require 'gridcli/commands/like'
 require 'gridcli/commands/dislike'
 require 'gridcli/commands/update'
+require 'gridcli/commands/search'
 
 require 'gridcli/resources/base'
 require 'gridcli/resources/user'

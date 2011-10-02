@@ -15,7 +15,7 @@ module GridCLI
 
       begin
         log "Trying to send a status update '#{body}' to your friends"
-        post = Post.create :body => body, :recipients => "friends", :posttype => 'status'
+        post = Post::Status.create :body => body, :recipients => "friends", :posttype => 'status'
       rescue ActiveResource::ClientError
         puts "There was an error sending your status.  Please make sure it's not empty."
         return

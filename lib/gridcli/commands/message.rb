@@ -21,7 +21,7 @@ module GridCLI
 
       begin
         log "Trying to send a message '#{subject}' to '#{recipients}'"
-        post = Post.create :subject => subject, :body => body, :recipients => recipients, :posttype => 'message'
+        post = Post::Message.create :subject => subject, :body => body, :recipients => recipients, :posttype => 'message'
       rescue ActiveResource::ClientError
         puts "There was an error sending your message.  Please make sure everyone in your recipient list is a friend, and the message body isn't empty."
         return

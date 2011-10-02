@@ -15,7 +15,7 @@ module GridCLI
 
       begin
         log "Trying to send a like '#{body}' to your friends"
-        post = Post.create :body => body, :recipients => "friends", :posttype => 'like'
+        post = Post::Like.create :body => body, :recipients => "friends", :posttype => 'like'
       rescue ActiveResource::ClientError
         puts "There was an error sending your like.  Please make sure it's not empty."
         return

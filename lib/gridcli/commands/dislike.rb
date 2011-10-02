@@ -15,7 +15,7 @@ module GridCLI
 
       begin
         log "Trying to send a dislike '#{body}' to your friends"
-        post = Post.create :body => body, :recipients => "friends", :posttype => 'dislike'
+        post = Post::Dislike.create :body => body, :recipients => "friends", :posttype => 'dislike'
       rescue ActiveResource::ClientError
         puts "There was an error sending your dislike.  Please make sure it's not empty."
         return
