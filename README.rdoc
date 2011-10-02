@@ -1,4 +1,4 @@
-= gridcli -- A command line interface to a command line, enterprise grade social network
+= gridcli -- A command line interface to The Grid
 
 The Grid is a command line social network that is always in offline mode.
 
@@ -26,16 +26,16 @@ To add a friend:
 To list your friends:
   grid friends
 
+== Messaging
+To send a message to a list of users:
+  grid message <username>[,<username>,...] [<subject>] <body>
 
-###########################
-grid message <username> "subject" "text"
+To send a status update, like, or dislike to your friends:
+  grid status <status message>
+  grid like <like message>
+  grid dislike <dislike message>
 
-grid status "message"
-grid like "message"
-grid dislike "message"
-
-grid list likes [<count>]
-
-grid search <type | 'all'> "ruby gem" yesterday
-
-grid update
+= To Do
+  grid list likes [<count>]
+  grid search <type | 'all'> "ruby gem" yesterday
+  grid update
