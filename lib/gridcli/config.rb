@@ -19,7 +19,7 @@ module GridCLI
 
     def default_config
       { 
-        'site' => "http://savorthegrid.com:3000",
+        'site' => "http://gridcli.com",
         'token' => rand(36**31).to_s(36)
       }
     end

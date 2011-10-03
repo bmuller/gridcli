@@ -25,7 +25,7 @@ module GridCLI
     end
 
     def save(posts)
-      if posts.length == 0
+      if posts.nil? or posts.length == 0
         puts "Up to date."
       else
         posts.each { |p| puts "#{p.to_s}\n\n" }
