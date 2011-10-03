@@ -40,11 +40,31 @@ To update all messages / likes / dislikes / etc, run:
   grid update
 
 == Searching
-You can search any type (or all types) for something.  Will eventually use Chronic to allow users to specify when to search.
-  grid search <like|dislike|message|status|all> "ruby gem"
+You can search any type (or all types) for something.
+  grid search <like|dislike|message|status|all> "ruby gem" [<when>]
 
-= To Do
+The <when> parameter is free form text and can be a range ("x to y").  For instance:
+  grid search like "chronic" today
+  grid search like "chronic" yesterday
+  grid search message "chronic" "two weeks ago to today"
+  grid search all "the grid" "1 month ago to last week"
+
+== Listing Posts
+You can list any type (or all types) of posts.
+  grid list <like|dislike|message|status|all> [<when>]
+
+The <when> parameter is free form text and can be a range ("x to y").  For instance:
+  grid list like today
+  grid list like yesterday
+  grid list message "two weeks ago to today"
+  grid list all "1 month ago to last week"
+
+== Blocking Users
+To block another user:
   grid block <user>
-  grid list likes [<count>]
+
+This will "unfriend" them and they will no longer see your posts.
+
+
 
 

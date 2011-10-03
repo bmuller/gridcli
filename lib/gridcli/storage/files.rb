@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'date'
 
 module GridCLI
   class FileStorage < StorageBase
@@ -40,11 +41,57 @@ module GridCLI
       @handles[path]
     end
 
-    def search(type, query, dates)
-      types = (type == "all") ? @types : [type]
+    def years(type)
+      Dir.glob(File.join(@basedir, type, '*')).map { |f| File.basename(f) }
+    end
+
+    def months(type, year)
+      Dir.glob(File.join(@basedir, type, year, '*')).map { |f| File.basename(f) }
+    end
+
+    def dates(type, year, month)
+      Dir.glob(File.join(@basedir, type, year, month, '*')).map { |f| File.basename(f) }
+    end
+
+    def min_date(type)
+      year = years(type).sort.first
+      month = months(type, year).sort.first
+      date = dates(type, year, month).sort.first.split('.').first
+      Date.new year.to_i, month.to_i, date.to_i
+    end
+
+    def max_date(type)
+      year = years(type).sort.last
+      month = months(type, year).sort.last
+      date = dates(type, year, month).sort.last.split('.').first
+      Date.new year.to_i, month.to_i, date.to_i
+    end
+
+    def has_type?(type)
+      Dir.glob(File.join(@basedir, type, "*")).length > 0
+    end
+
+    def files(type, start_date, end_date)
+      types = (type.strip == "all") ? @types : [type]
       types.each { |t|
-        path = File.join(@basedir, t)
+        next unless has_type?(t)
+        dates = [start_date || min_date(t), end_date || max_date(t)]
+        dates.min.upto(dates.max) { |d|
+          path = File.join(@basedir, t, d.year.to_s, d.month.to_s, d.day.to_s + ".json")
+          yield path if File.exists? path
+        }
+      }
+    end
+
+    def search(type, query, start_date, end_date)
+      files(type, start_date, end_date) { |path|
         system "grep -R \"#{query}\" #{path}"
+      }
+    end
+
+    def list(type, start_date, end_date)
+      files(type, start_date, end_date) { |path|
+        system "cat #{path}"
       }
     end
 
