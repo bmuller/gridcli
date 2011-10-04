@@ -17,8 +17,10 @@ end
 
 require 'gridcli/version'
 require 'gridcli/runner'
+require 'gridcli/pprinter'
 
 require 'gridcli/commands/base'
+require 'gridcli/commands/pprint'
 require 'gridcli/commands/signup'
 require 'gridcli/commands/help'
 require 'gridcli/commands/profile'

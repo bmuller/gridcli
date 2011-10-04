@@ -1,0 +1,13 @@
+grid list friends --of-friends
+
+pretty print for profiles
+
+ascii profiles
+
+circles (or grids?) - with lists stored locally.  Format:
+
+play: [ sally, mary, suzie ]
+work: [ bob, john ]
+everyone: [ @work, @play ]
+
+or something like that..

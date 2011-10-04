@@ -9,8 +9,7 @@ module GridCLI
     end
 
     def run(args)
-      usage if args.length == 0
-      type = args.shift
+      type = (args.length > 0) ? args.shift : "all"
       usage if not [ 'like', 'dislike', 'status', 'message', 'all' ].include? type
       period = (args.length > 0 and not args.first.start_with? '-') ? args.shift : nil
       dates = parse_dates period

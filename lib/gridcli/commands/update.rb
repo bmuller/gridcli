@@ -29,7 +29,12 @@ module GridCLI
       if posts.length == 0
         puts "Up to date."
       else
-        posts.each { |p| puts "#{p.to_s}\n\n" }
+        posts.each { |p| 
+          type = p.known_attributes.first
+          json = p.send(type).to_json(:root => type)
+          puts PrettyPrinter.new(json)
+          puts
+        }
         @config['last_sha'] = GridCLI.storage.append(posts)
         @config.save
       

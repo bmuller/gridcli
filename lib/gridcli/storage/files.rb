@@ -85,13 +85,13 @@ module GridCLI
 
     def search(type, query, start_date, end_date)
       files(type, start_date, end_date) { |path|
-        system "grep -R \"#{query}\" #{path}"
+        system "grep -R \"#{query}\" #{path} | #{$0} pprint"
       }
     end
 
     def list(type, start_date, end_date)
       files(type, start_date, end_date) { |path|
-        system "cat #{path}"
+        system "cat #{path} | #{$0} pprint"
       }
     end
 
