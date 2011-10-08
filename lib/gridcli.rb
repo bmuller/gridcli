@@ -6,6 +6,7 @@ require 'gridcli/storage/files'
 require 'gridcli/ymlhash'
 require 'gridcli/config'
 require 'gridcli/subgrids'
+require 'gridcli/stats'
 
 module GridCLI
   def self.config
@@ -14,6 +15,10 @@ module GridCLI
   
   def self.storage
     @storage ||= FileStorage.new
+  end
+
+  def self.stats
+    @stats ||= Stats.new
   end
 end
 

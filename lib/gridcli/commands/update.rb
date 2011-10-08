@@ -6,7 +6,7 @@ module GridCLI
 
     def run(args)
       parse_opts args
-      last_sha = @config['last_sha']
+      last_sha = @stats['last_sha']
 
       begin
         if last_sha.nil?
@@ -35,8 +35,8 @@ module GridCLI
           puts PrettyPrinter.new(json)
           puts
         }
-        @config['last_sha'] = GridCLI.storage.append(posts)
-        @config.save
+        @stats['last_sha'] = GridCLI.storage.append(posts)
+        @stats.save
       
         # run again if we got back 300 posts
         run(args) if posts.length == 300

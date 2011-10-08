@@ -7,6 +7,7 @@ module GridCLI
 
     def initialize(cmd, desc, default_opts = nil)
       @config = GridCLI.config
+      @stats = GridCLI.stats
       @cmd = cmd
       @desc = desc
       @opts = default_opts || {}
