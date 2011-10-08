@@ -28,7 +28,7 @@ module GridCLI
     end
 
     def output_format
-      @opts[:output_format]
+      @opts[:output_format] || "cmdcolor"
     end
     
     def pprint(json)

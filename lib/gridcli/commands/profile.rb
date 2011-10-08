@@ -10,6 +10,7 @@ module GridCLI
         @opts[:name] = u
         @opts[:update] = true
       }
+      add_format_option
     end
 
     def usage
@@ -38,7 +39,7 @@ module GridCLI
         user.save
       end
 
-      puts user
+      pprint user.to_json
     end
   end
 

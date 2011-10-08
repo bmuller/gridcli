@@ -22,6 +22,10 @@ module GridCLI
     def self.message(original, parsed)
       self.all(parsed)
     end
+
+    def self.user(original, parsed)
+      self.all(parsed)
+    end
   end
 
   class PPCmdFormat
@@ -44,6 +48,16 @@ module GridCLI
       s+= "To: #{parsed['recipients']}\n"
       s+= "#{parsed['body']}\n\n"
     end
+
+    def self.user(original, parsed)
+      s = "#{parsed['username']}\n" 
+      s+= "created: #{parsed['created_at']}\n"
+      (parsed.keys - ['created_at', 'username']).each { |key|
+        next if parsed[key].nil?
+        s += "#{key}: #{parsed[key]}\n"
+      }
+      s += "\n"
+    end
   end
 
   class PPCmdColorFormat < PPCmdFormat
@@ -65,6 +79,16 @@ module GridCLI
       s+= "Date: ".cyan + parsed['created_at'] + "\n"
       s+= "To: ".cyan + parsed['recipients'] + "\n"
       s+= "#{parsed['body']}\n\n"
+    end
+
+    def self.user(original, parsed)
+      s = "username: ".magenta + "#{parsed['username']}\n".yellow
+      s+= "created: ".magenta + "#{parsed['created_at']}\n"
+      (parsed.keys - ['created_at', 'username']).each { |key|
+        next if parsed[key].nil?
+        s += "#{key}: ".magenta + "#{parsed[key]}\n"
+      }
+      s += "\n"
     end
   end
 
@@ -94,12 +118,14 @@ module GridCLI
       formatter = formatters.fetch(@format, nil)
       # if the format is unknown or :json return original
       return @original if formatter.nil?
-
+      
       case @type
       when "message" then formatter.message(@original, @contents)
       when "like" then formatter.like(@original, @contents)
       when "dislike" then formatter.dislike(@original, @contents)
       when "status" then formatter.status(@original, @contents)
+      when "friend_request" then formatter.message(@original, @contents)
+      when "user" then formatter.user(@original, @contents)
       else @original #unknown type
       end
     end

@@ -17,7 +17,7 @@ module GridCLI
         log "Getting all friends of '#{username}'"
         friends = Friendship.find(:all, :params => { :id => username })
         friends.each { |f|
-          puts f
+          pprint f.user.to_json
         }
         puts "You have no friends :(" if friends.length == 0
       rescue ActiveResource::ForbiddenAccess
