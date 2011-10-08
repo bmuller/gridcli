@@ -7,6 +7,8 @@ require 'gridcli/ymlhash'
 require 'gridcli/config'
 require 'gridcli/subgrids'
 require 'gridcli/stats'
+require 'gridcli/hooks'
+require 'gridcli/plugins'
 
 module GridCLI
   def self.config
@@ -19,6 +21,14 @@ module GridCLI
 
   def self.stats
     @stats ||= Stats.new
+  end
+
+  def self.hooker
+    @hooker ||= Hooker.new
+  end
+
+  def self.plugins
+    @plugins ||= Plugins.new
   end
 end
 
@@ -35,6 +45,7 @@ require 'gridcli/commands/help'
 require 'gridcli/commands/like'
 require 'gridcli/commands/list'
 require 'gridcli/commands/message'
+require 'gridcli/commands/plugin'
 require 'gridcli/commands/pprint'
 require 'gridcli/commands/profile'
 require 'gridcli/commands/search'
@@ -48,3 +59,5 @@ require 'gridcli/resources/blockage'
 require 'gridcli/resources/friendship'
 require 'gridcli/resources/post'
 require 'gridcli/resources/user'
+
+GridCLI.plugins.include!

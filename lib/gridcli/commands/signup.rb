@@ -14,6 +14,8 @@ module GridCLI
       username = args.shift
       parse_opts args
 
+      username = GridCLI.hooker.invoke :before_signup, username
+
       @config["username"] = username
       @config.save
       

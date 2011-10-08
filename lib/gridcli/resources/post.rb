@@ -2,11 +2,12 @@ module GridCLI
   module Post
 
     class PostBase < BaseResource
-      # before we create, resolve names from subgrid
+      # before we create, resolve names from subgrid and call hooks
       def self.create(attributes)
         subgrids = SubGrids.new
         users = attributes[:recipients].split(",")
         attributes[:recipients] = subgrids.resolve(users).join(",")
+        attributes = GridCLI.hooker.invoke :before_post_creation, attributes
         super attributes
       end
 

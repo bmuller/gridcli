@@ -9,6 +9,8 @@ module GridCLI
       parse_opts args
       last_sha = @stats['last_sha']
 
+      GridCLI.hooker.invoke :before_update
+
       begin
         if last_sha.nil?
           log "Trying to download all messages."

@@ -28,7 +28,7 @@ To list your friends:
 
 == Messaging
 To send a message to a list of users:
-  grid message <username>[,<username>,...] [<subject>] <body>
+  grid message <username>[,<username>,...] [-s <subject>] [-b <body>] [-f <body file>]
 
 To send a status update, like, or dislike to your friends:
   grid status <status message>
@@ -49,6 +49,9 @@ The <when> parameter is free form text and can be a range ("x to y").  For insta
   grid search message "chronic" "two weeks ago to today"
   grid search all "the grid" "1 month ago to last week"
 
+You can see your messages in your ~/.grid directory.  For instance, if you want to search all likes using grep:
+  grep -RiI ~/.grid/like "grid"
+
 == Listing Posts
 You can list any type (or all types) of posts.
   grid list <like|dislike|message|status|all> [<when>]
@@ -65,6 +68,37 @@ To block another user:
 
 This will "unfriend" them and they will no longer see your posts.
 
+== Subgrids
+Subgrids are groups that you manage and are defined in a local config file.
 
+To create a subgrid, use:
+  grid subgrid @mygroup bob,john,snakeplisskin
 
+To see what subgrids exist:
+  grid subgrid
 
+To see what users are in a particular subgrid:
+  grid subgrid @mygroup
+
+You can then use the group as though it were a user.  For instance, to send a message to @mygroup:
+  grid message @mygroup -s "hey guys" -b "Let's go make a rum ham."
+
+If you prefer to simply edit the config file, you can do so (the file is located at ~/.grid/subgrids).
+
+== Plugins
+Plugins are easy to create and can register hooks.  To install/uninstall a plugin, use:
+  grid plugin install <name>
+  grid plugin uninstall <name>
+
+To see a list of installed plugins:
+  grid plugin
+
+An example plugin is the echo plugin:
+  grid plugin install echo
+
+This command will install the gem "grid-plugin-echo" and load it each time the gridcli gem is loaded.  It uses the available hooks:
+* before_post_creation(post_hash)
+* before_signup(username)
+* before_update
+
+and prints out a message whenever a user signs up, a post is created, or the update command is called.  You can see the code for the echo module at https://github.com/bmuller/grid-plugin-echo.
