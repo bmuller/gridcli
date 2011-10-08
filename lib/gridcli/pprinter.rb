@@ -2,47 +2,106 @@ require 'json'
 require 'colorize'
 
 module GridCLI
+  class PPTextLineFormat
+    def self.all(parsed)
+      parsed.map { |k,v| "#{k}: #{v}" }.join("; ")
+    end
+    
+    def self.like(original, parsed)
+      self.all(parsed)
+    end
+
+    def self.dislike(original, parsed)
+      self.all(parsed)
+    end
+
+    def self.status(original, parsed)
+      self.all(parsed)
+    end
+
+    def self.message(original, parsed)
+      self.all(parsed)
+    end
+  end
+
+  class PPCmdFormat
+    def self.like(original, parsed)
+      "on #{@created_at} #{@contents['from_username']} liked #{@contents['body']}\n\n"
+    end
+
+    def self.dislike(original, parsed)
+      "on #{@created_at} #{@contents['from_username']} disliked #{@contents['body']}\n\n"
+    end
+
+    def self.status(original, parsed)
+      "on #{@created_at} #{@contents['from_username']} was #{@contents['body']}\n\n"
+    end
+
+    def self.message(original, parsed)
+      s = "Message from: #{parsed['from_username']}\n"
+      s+= "Subject: #{parsed['subject']}\n"
+      s+= "Date: #{parsed['created_at']}\n"
+      s+= "To: #{parsed['recipients']}\n"
+      s+= "#{parsed['body']}\n\n"
+    end
+  end
+
+  class PPCmdColorFormat < PPCmdFormat
+    def self.like(original, parsed)
+      super(original, parsed).green
+    end
+
+    def self.dislike(original, parsed)
+      super(original, parsed).red
+    end
+
+    def self.status(original, parsed)
+      super(original, parsed).cyan
+    end
+
+    def self.message(original, parsed)
+      s = "Message from: ".cyan + parsed['from_username'] + "\n"
+      s+= "Subject: ".cyan + parsed['subject'] + "\n"
+      s+= "Date: ".cyan + parsed['created_at'] + "\n"
+      s+= "To: ".cyan + parsed['recipients'] + "\n"
+      s+= "#{parsed['body']}\n\n"
+    end
+  end
+
+
   class PrettyPrinter
-    def initialize(string)
+    # format can be one of :cmdcolor, :cmd, :textline, :json
+    def initialize(string, format=nil)
+      @format = format.nil? ? :cmdcolor : format.intern
+      @original = string
       begin
         j = JSON.parse(string)
-        type = j.keys.first
-        @contents = j[type]    
-        @created_at = Time.parse(@contents['created_at']).localtime.to_s
-        @pretty = case type
-                  when "message" then pprint_message
-                  when "like" then pprint_like
-                  when "dislike" then pprint_dislike
-                  when "status" then pprint_status
-                  else string 
-                  end
+        @type = j.keys.first
+        @contents = j[@type]
+        @contents['created_at'] = Time.parse(@contents['created_at']).localtime.to_s
       rescue JSON::ParserError
-        @pretty = string
+        @type = nil
+        @format = nil
+        @contents = {}
       end
     end
 
-    def pprint_like
-      "on #{@created_at} #{@contents['from_username']} liked #{@contents['body']}".green
-    end
-
-    def pprint_dislike
-      "on #{@created_at} #{@contents['from_username']} disliked #{@contents['body']}".red
-    end
-
-    def pprint_status
-      "on #{@created_at} #{@contents['from_username']} was #{@contents['body']}".cyan
-    end
-
-    def pprint_message
-      s = "Message from: ".cyan + @contents['from_username'] + "\n"
-      s+= "Subject: ".cyan + @contents['subject'] + "\n"
-      s+= "Date: ".cyan + @created_at + "\n"
-      s+= "To: ".cyan + @contents['recipients'] + "\n"
-      s+= @contents['body']
+    def formatters
+      { :cmdcolor => PPCmdColorFormat, :cmd => PPCmdFormat, :textline => PPTextLineFormat }
     end
 
     def to_s
-      @pretty
+      formatter = formatters.fetch(@format, nil)
+      # if the format is unknown or :json return original
+      return @original if formatter.nil?
+
+      case @type
+      when "message" then formatter.message(@original, @contents)
+      when "like" then formatter.like(@original, @contents)
+      when "dislike" then formatter.dislike(@original, @contents)
+      when "status" then formatter.status(@original, @contents)
+      else @original #unknown type
+      end
     end
   end
 end

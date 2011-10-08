@@ -2,6 +2,7 @@ module GridCLI
   class ListCommand < BaseCommand
     def initialize
       super "list", "List posts of a particular kind or all posts"
+      add_format_option
     end
 
     def usage
@@ -16,7 +17,7 @@ module GridCLI
       parse_opts args
       
       log "Showing #{type} posts in range #{dates.first || 'first'} - #{dates.last || 'last'}"
-      GridCLI.storage.list(type, dates[0], dates[1])
+      GridCLI.storage.list(type, dates[0], dates[1], output_format)
     end
   end
 

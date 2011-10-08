@@ -20,6 +20,21 @@ module GridCLI
       @optp.on(*args) { |u| yield u }
     end
 
+    def add_format_option
+      msg = "Specify output format (json, cmdcolor, cmd, textline)"
+      add_option("-o format", "--output-format format", msg) { |o|
+        @opts[:output_format] = o
+      }
+    end
+
+    def output_format
+      @opts[:output_format]
+    end
+    
+    def pprint(json)
+      puts PrettyPrinter.new(json, output_format)
+    end
+
     def usage(cmd_opts=nil)
       cmd_opts ||= ""
       @optp.banner = "Usage: grid #{@cmd} #{cmd_opts} [options]"

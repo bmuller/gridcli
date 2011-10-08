@@ -2,16 +2,14 @@ module GridCLI
   class PPrintCommand < BaseCommand
     def initialize
       super "pprint", "A program that will pretty print posts/users"
+      add_format_option
     end
 
     def run(args)
-      usage if args.length != 0
+      parse_opts args
 
       ARGV.clear
-      ARGF.each { |line|
-        puts PrettyPrinter.new(line)
-        puts
-      }
+      ARGF.each { |line| pprint(line) }
     end
   end
 

@@ -2,6 +2,7 @@ module GridCLI
   class UpdateCommand < BaseCommand
     def initialize
       super "update", "Download all messages"
+      add_format_option
     end
 
     def run(args)
@@ -32,8 +33,7 @@ module GridCLI
         posts.each { |p| 
           type = p.known_attributes.first
           json = p.send(type).to_json(:root => type)
-          puts PrettyPrinter.new(json)
-          puts
+          pprint json
         }
         @stats['last_sha'] = GridCLI.storage.append(posts)
         @stats.save

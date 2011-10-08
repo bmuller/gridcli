@@ -7,6 +7,7 @@ module GridCLI
       add_option("-s subject", "--subject subject", "Subject for message") { |s| @opts[:subject] = s }
       add_option("-f file", "--file file", "File to use for message body") { |f| @opts[:file] = f }
       add_option("-b body", "--body body", "Message body") { |b| @opts[:body] = b }
+      add_format_option
     end
 
     def usage
@@ -37,7 +38,7 @@ module GridCLI
         return
       end
 
-      puts PrettyPrinter.new(post.to_post_json)
+      pprint post.to_post_json
     end
   end
 

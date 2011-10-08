@@ -2,6 +2,7 @@ module GridCLI
   class SearchCommand < BaseCommand
     def initialize
       super "search", "Search posts"
+      add_format_option
     end
 
     def usage
@@ -18,7 +19,7 @@ module GridCLI
       parse_opts args
 
       log "Showing #{type} posts in range #{dates.first || 'first'} - #{dates.last || 'last'}"
-      GridCLI.storage.search(type, query, dates[0], dates[1])
+      GridCLI.storage.search(type, query, dates[0], dates[1], output_format)
     end
   end
 

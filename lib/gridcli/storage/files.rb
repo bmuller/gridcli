@@ -83,15 +83,17 @@ module GridCLI
       }
     end
 
-    def search(type, query, start_date, end_date)
+    def search(type, query, start_date, end_date, output_format)
+      options = output_format.nil? ? "" : "-o #{output_format}"
       files(type, start_date, end_date) { |path|
-        system "grep -R \"#{query}\" #{path} | #{$0} pprint"
+        system "grep -R \"#{query}\" #{path} | #{$0} pprint #{options}"
       }
     end
 
-    def list(type, start_date, end_date)
+    def list(type, start_date, end_date, output_format)
+      options = output_format.nil? ? "" : "-o #{output_format}"
       files(type, start_date, end_date) { |path|
-        system "cat #{path} | #{$0} pprint"
+        system "cat #{path} | #{$0} pprint #{options}"
       }
     end
 

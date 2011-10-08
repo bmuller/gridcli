@@ -2,6 +2,7 @@ module GridCLI
   class StatusCommand < BaseCommand
     def initialize
       super "status", "Send a status update to all friends."
+      add_format_option
     end
 
     def usage
@@ -21,7 +22,7 @@ module GridCLI
         return
       end
       
-      puts PrettyPrinter.new(post.to_post_json)
+      pprint post.to_post_json
     end
   end
 
