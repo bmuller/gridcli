@@ -26,6 +26,11 @@ module GridCLI
       exit
     end
 
+    def error(msg)
+      puts msg
+      exit 1
+    end
+
     def parse_dates(datestring)
       dates = [nil, nil]
       return dates if datestring.nil? or datestring.strip == ""

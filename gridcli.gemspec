@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   s.add_dependency("activeresource", ">= 3.0.10")
+  s.add_dependency("activesupport", ">= 3.0.10")
   s.add_dependency("chronic", ">= 0.6.4")
   s.add_dependency("json", ">= 1.6.1")
   s.add_dependency("colorize", ">= 0.5.8")

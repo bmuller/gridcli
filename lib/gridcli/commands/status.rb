@@ -20,8 +20,8 @@ module GridCLI
         puts "There was an error sending your status.  Please make sure it's not empty."
         return
       end
-
-      puts post
+      
+      puts PrettyPrinter.new(post.to_post_json)
     end
   end
 

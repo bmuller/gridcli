@@ -11,7 +11,7 @@ module GridCLI
       end
 
       puts "Usage: grid <cmd>\n\nAvailable commands:\n\n"
-      Runner.commands.each { |klass|
+      Runner.commands.sort { |a,b| a.to_s <=> b.to_s }.each { |klass|
         inst = klass.new
         puts "\t#{inst.cmd.ljust(25) + inst.desc}"
       }

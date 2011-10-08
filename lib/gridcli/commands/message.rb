@@ -1,3 +1,5 @@
+require 'active_support/core_ext'
+
 module GridCLI
   class MessageCommand < BaseCommand
     def initialize
@@ -14,7 +16,7 @@ module GridCLI
       if args.length > 1 and not args[1].start_with?('-')
         subject = args.shift
       else
-        subject = args.first.slice(0,30) + "..."
+        subject = args.first.truncate(30)
       end
       body = args.shift
       parse_opts args
@@ -27,7 +29,7 @@ module GridCLI
         return
       end
 
-      puts post
+      puts PrettyPrinter.new(post.to_post_json)
     end
   end
 
