@@ -8,7 +8,7 @@ module GridCLI
       raise "Not implemented"
     end
 
-    def search(type, query, state_date, end_date, output_format)
+    def search(type, query, state_date, end_date, output_format, fromuser)
       raise "Not implemented"
     end
 

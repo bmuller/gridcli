@@ -82,18 +82,25 @@ module GridCLI
         }
       }
     end
+    
+    def run(pipes)
+      system pipes.join(" | ")
+    end
 
-    def search(type, query, start_date, end_date, output_format)
+    def search(type, query, start_date, end_date, output_format, fromuser=nil)
       options = output_format.nil? ? "" : "-o #{output_format}"
       files(type, start_date, end_date) { |path|
-        system "grep -R \"#{query}\" #{path} | #{$0} pprint #{options}"
+        pipes = ["grep -Ri \"#{query}\" #{path}"]
+        pipes << "grep '\"from_username\":\"#{fromuser}\"'" unless fromuser.nil?
+        pipes << "#{$0} pprint #{options}"
+        run pipes
       }
     end
 
     def list(type, start_date, end_date, output_format)
       options = output_format.nil? ? "" : "-o #{output_format}"
       files(type, start_date, end_date) { |path|
-        system "cat #{path} | #{$0} pprint #{options}"
+        run ["cat #{path}", "#{$0} pprint #{options}"]
       }
     end
 

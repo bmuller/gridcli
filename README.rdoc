@@ -28,6 +28,9 @@ To add a friend:
 To list your friends:
   grid friends
 
+To list the friends of a friend:
+  grid friends <username>
+
 == Messaging
 To send a message to a list of users:
   grid message <username>[,<username>,...] [-s <subject>] [-b <body>] [-f <body file>]
