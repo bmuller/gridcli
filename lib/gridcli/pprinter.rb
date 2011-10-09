@@ -30,15 +30,15 @@ module GridCLI
 
   class PPCmdFormat
     def self.like(original, parsed)
-      "on #{@created_at} #{@contents['from_username']} liked #{@contents['body']}\n\n"
+      "on #{parsed['created_at']} #{parsed['from_username']} liked #{parsed['body']}\n"
     end
 
     def self.dislike(original, parsed)
-      "on #{@created_at} #{@contents['from_username']} disliked #{@contents['body']}\n\n"
+      "on #{parsed['created_at']} #{parsed['from_username']} disliked #{parsed['body']}\n"
     end
 
     def self.status(original, parsed)
-      "on #{@created_at} #{@contents['from_username']} was #{@contents['body']}\n\n"
+      "on #{parsed['created_at']} #{parsed['from_username']} was #{parsed['body']}\n"
     end
 
     def self.message(original, parsed)

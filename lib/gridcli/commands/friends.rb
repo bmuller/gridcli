@@ -2,6 +2,7 @@ module GridCLI
   class FriendsCommand < BaseCommand
     def initialize
       super "friends", "List your friends or the friends of a friend"
+      add_format_option
     end
 
     def usage
@@ -10,7 +11,7 @@ module GridCLI
 
     def run(args)
       # handle options
-      username = @config['username'] if args.length == 0
+      username = (args.length == 0 or args.first.start_with?('-')) ? @config['username'] : args.shift
       parse_opts args
 
       begin
@@ -21,8 +22,8 @@ module GridCLI
         }
         puts "#{username} has no friends :(" if friends.length == 0
       rescue ActiveResource::ForbiddenAccess
-        puts "Looks like '#{username}' isn't one of your friends."
-      rescue ActiveResource::ResourceNotFound
+        puts "Looks like '#{username}' isn't one of your friends, so you can't view #{username}'s friends."
+      rescue ActiveResource::ClientError
         puts "Sorry, can't find a user with name '#{username}'"
       end
     end
