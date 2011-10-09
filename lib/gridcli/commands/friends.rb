@@ -19,7 +19,7 @@ module GridCLI
         friends.each { |f|
           pprint f.user.to_json
         }
-        puts "You have no friends :(" if friends.length == 0
+        puts "#{username} has no friends :(" if friends.length == 0
       rescue ActiveResource::ForbiddenAccess
         puts "Looks like '#{username}' isn't one of your friends."
       rescue ActiveResource::ResourceNotFound
