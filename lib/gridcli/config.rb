@@ -7,7 +7,7 @@ module GridCLI
 
     def default_config
       { 
-        'site' => "http://gridcli.com",
+        'site' => "https://api.gridcli.com",
         'token' => rand(36**31).to_s(36)
       }
     end
