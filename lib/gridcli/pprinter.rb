@@ -104,7 +104,11 @@ module GridCLI
         j = JSON.parse(string)
         @type = j.keys.first
         @contents = j[@type]
-        @contents['created_at'] = Time.parse(@contents['created_at']).localtime.to_s
+        if @contents.has_key? 'created_at'
+          @contents['created_at'] = Time.parse(@contents['created_at']).localtime.to_s
+        else
+          @contents['created_at'] = Time.now
+        end
       rescue JSON::ParserError
         @type = nil
         @format = nil
