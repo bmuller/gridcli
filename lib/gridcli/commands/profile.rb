@@ -10,6 +10,10 @@ module GridCLI
         @opts[:name] = u
         @opts[:update] = true
       }
+      add_option("--avatar file", "Set your avatar (a text file)") { |u| 
+        @opts[:avatar] = u
+        @opts[:update] = true
+      }
       add_format_option
     end
 
@@ -35,6 +39,13 @@ module GridCLI
       # if we're supposed to update, do so
       if @opts[:update]
         [:github_username, :name].each { |n| user.send("#{n.to_s}=", @opts[n]) }
+        unless @opts[:avatar].nil?
+          if File.exists?(@opts[:avatar])
+            user.avatar = File.read(@opts[:avatar])
+          else
+            error("File #{@opts[:avatar]} does not exist")
+          end
+        end
         user.id = username
         user.save
       end

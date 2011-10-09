@@ -1,6 +1,6 @@
 = gridcli -- A command line interface to The Grid
 
-The Grid is a command line social network that is always in offline mode.
+The Grid is a command line social network that is fast, modular, and simple.
 
 To install:
   gem install gridcli
@@ -14,7 +14,9 @@ To show your profile:
   grid profile 
 
 To update your profile:
-  grid profile [--github-username <username>] [--name <name>]
+  grid profile [--github-username <username>] [--name <name>] [--avatar <avatar text file>]
+
+If you want a profile pic, use a program like jp2a to convert a jpeg image to ascii format first.
 
 To show someone else's profile:
   grid profile <username>

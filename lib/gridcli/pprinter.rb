@@ -52,10 +52,11 @@ module GridCLI
     def self.user(original, parsed)
       s = "#{parsed['username']}\n" 
       s+= "created: #{parsed['created_at']}\n"
-      (parsed.keys - ['created_at', 'username']).each { |key|
+      (parsed.keys - ['created_at', 'username', 'avatar']).each { |key|
         next if parsed[key].nil?
         s += "#{key}: #{parsed[key]}\n"
       }
+      s+= parsed['avatar'] unless parsed['avatar'].nil?
       s += "\n"
     end
   end
@@ -84,10 +85,11 @@ module GridCLI
     def self.user(original, parsed)
       s = "username: ".magenta + "#{parsed['username']}\n".yellow
       s+= "created: ".magenta + "#{parsed['created_at']}\n"
-      (parsed.keys - ['created_at', 'username']).each { |key|
+      (parsed.keys - ['created_at', 'username', 'avatar']).each { |key|
         next if parsed[key].nil?
         s += "#{key}: ".magenta + "#{parsed[key]}\n"
       }
+      s+= parsed['avatar'] unless parsed['avatar'].nil?
       s += "\n"
     end
   end
