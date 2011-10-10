@@ -22,7 +22,7 @@ module GridCLI
         return
       end
 
-      pprint post.to_post_json
+      puts "Dislike posted."
     end
   end
 
