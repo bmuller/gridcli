@@ -20,6 +20,10 @@ module GridCLI
       @optp.on(*args) { |u| yield u }
     end
 
+    def pop_arg(args, default=nil)
+      (args.length != 0 and not args.first.start_with?('-')) ? args.shift : default
+    end
+
     def add_format_option
       msg = "Specify output format (json, cmdcolor, cmd, textline)"
       add_option("-o format", "--output-format format", msg) { |o|

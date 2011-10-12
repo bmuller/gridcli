@@ -24,7 +24,7 @@ module GridCLI
         User.new(:username => username, :token => @config['token']).save
         puts "New user created.  You are now known as '#{username}'"
       rescue ActiveResource::ClientError
-        puts "Sorry, username '#{username}' already exists."
+        puts "Sorry, username '#{username}' already exists or contains non-alphanumeric characters."
       end
     end
   end
