@@ -24,6 +24,8 @@ module GridCLI
         return
       end
 
+      posts = GridCLI.hooker.invoke :after_update, posts
+
       log "Saving #{posts.length} posts."
       save posts
     end

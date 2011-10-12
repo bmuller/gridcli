@@ -105,5 +105,6 @@ This command will install the gem "grid-plugin-echo" and load it each time the g
 * before_post_creation(post_hash)
 * before_signup(username)
 * before_update
+* after_update
 
 and prints out a message whenever a user signs up, a post is created, or the update command is called.  You can see the code for the echo module at https://github.com/bmuller/grid-plugin-echo.
