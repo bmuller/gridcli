@@ -98,7 +98,7 @@ module GridCLI
   class PrettyPrinter
     # format can be one of :cmdcolor, :cmd, :textline, :json
     def initialize(string, format=nil)
-      @format = format.nil? ? :cmdcolor : format.intern
+      @format = format.nil? ? :cmdcolor : format.to_sym
       @original = string
       begin
         j = JSON.parse(string)
