@@ -26,12 +26,12 @@ module GridCLI
 
       posts = GridCLI.hooker.invoke :after_update, posts
 
-      log "Saving #{posts.length} posts."
+      log "Saving #{posts ? posts.length : 0} posts."
       save posts
     end
 
     def save(posts)
-      if posts.length == 0
+      if posts.blank?
         puts "Up to date."
       else
         posts.each { |p| 
