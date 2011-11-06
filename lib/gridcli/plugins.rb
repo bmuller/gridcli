@@ -15,11 +15,11 @@ module GridCLI
 
     def install(name)
       name = "grid-plugin-#{name}" unless name.start_with?("grid-plugin-")
+      Gem::GemRunner.new.run ["install", name, "--no-rdoc", "--no-ri"]
       unless fetch('enabled', []).include? name
         self['enabled'] << name
         save
       end
-      Gem::GemRunner.new.run ["install", name, "--no-rdoc", "--no-ri"]
     end
 
     def uninstall(name)
