@@ -1,1 +1,1 @@
-rvm ree-1.8.7-2011.03@gridcli --create
+rvm --create ruby-1.9.2-p0@gridcli
