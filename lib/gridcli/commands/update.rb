@@ -7,10 +7,27 @@ module GridCLI
 
     def run(args)
       parse_opts args
-      last_sha = @stats['last_sha']
 
+      posts = run_since_sha(@stats['last_sha'])
+      total_posts = posts.length
+      @stats['last_sha'] = save(posts) if posts.length > 0
+
+      # If we're doing this in chunks, get more
+      while posts.length == 300
+        posts = run_since_sha(@stats['last_sha'])
+        total_posts += posts.length
+        @stats['last_sha'] = save(posts) if posts.length > 0
+      end
+
+      @stats.save
+      puts "Saved #{total_posts} posts.  Now up to date."
+    end
+    
+
+    def run_since_sha(last_sha)
       GridCLI.hooker.invoke :before_update
 
+      posts = []
       begin
         if last_sha.nil?
           log "Trying to download all messages."
@@ -21,30 +38,18 @@ module GridCLI
         end
       rescue ActiveResource::ClientError
         puts "There was an error updating your messages."
-        return
       end
 
-      posts = GridCLI.hooker.invoke :after_update, posts
-
-      log "Saving #{posts ? posts.length : 0} posts."
-      save posts
+      GridCLI.hooker.invoke :after_update, posts
     end
 
     def save(posts)
-      if posts.blank?
-        puts "Up to date."
-      else
-        posts.each { |p| 
-          type = p.known_attributes.first
-          json = p.send(type).to_json(:root => type)
-          pprint json
-        }
-        @stats['last_sha'] = GridCLI.storage.append(posts)
-        @stats.save
-      
-        # run again if we got back 300 posts
-        run(args) if posts.length == 300
-      end
+      posts.each { |p| 
+        type = p.known_attributes.first
+        json = p.send(type).to_json(:root => type)
+        pprint json
+      }
+      (posts.length > 0) ? GridCLI.storage.append(posts) : nil
     end
   end
 
