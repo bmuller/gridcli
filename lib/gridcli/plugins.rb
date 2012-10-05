@@ -1,4 +1,5 @@
 require 'rubygems/gem_runner'
+require 'rubygems/commands/query_command'
 
 module GridCLI
   class Plugins < YMLHash
@@ -15,8 +16,12 @@ module GridCLI
 
     def install(name)
       name = "grid-plugin-#{name}" unless name.start_with?("grid-plugin-")
-      Gem::GemRunner.new.run ["install", name, "--no-rdoc", "--no-ri"]
-      unless fetch('enabled', []).include? name
+      Process.fork { Gem::GemRunner.new.run ["install", name, "--no-rdoc", "--no-ri"]; puts "done" }
+      Process.wait
+
+      if Gem::Specification.find_all_by_name(name).length == 0
+        puts "There was an issue installing the plugin."
+      elsif not fetch('enabled', []).include? name
         self['enabled'] << name
         save
       end

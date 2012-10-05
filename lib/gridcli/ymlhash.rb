@@ -16,7 +16,6 @@ module GridCLI
       File.exists?(@conffile) ? update(YAML.load_file(@conffile)) : save
     end
 
-
     def default_config
       {}
     end
