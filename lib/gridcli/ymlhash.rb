@@ -21,7 +21,7 @@ module GridCLI
     end
 
     def save
-      File.open(@conffile, 'w') { |f| YAML.dump(Hash.new(self), f) }
+      File.open(@conffile, 'w') { |f| YAML.dump(Hash.new.merge(self), f) }
     end
   end
 end
