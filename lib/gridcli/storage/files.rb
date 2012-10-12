@@ -42,29 +42,31 @@ module GridCLI
     end
 
     def years(type)
-      Dir.glob(File.join(@basedir, type, '*')).map { |f| File.basename(f) }
+      Dir.glob(File.join(@basedir, type, '*')).map { |f| File.basename(f).to_i }
     end
 
     def months(type, year)
-      Dir.glob(File.join(@basedir, type, year, '*')).map { |f| File.basename(f) }
+      Dir.glob(File.join(@basedir, type, year.to_s, '*')).map { |f| File.basename(f).to_i }
     end
 
     def dates(type, year, month)
-      Dir.glob(File.join(@basedir, type, year, month, '*')).map { |f| File.basename(f) }
+      Dir.glob(File.join(@basedir, type, year.to_s, month.to_s, '*')).map { |f| 
+        File.basename(f).split('.').first.to_i
+      }
     end
 
     def min_date(type)
       year = years(type).sort.first
       month = months(type, year).sort.first
-      date = dates(type, year, month).sort.first.split('.').first
-      Date.new year.to_i, month.to_i, date.to_i
+      date = dates(type, year, month).sort.first
+      Date.new year, month, date
     end
 
     def max_date(type)
       year = years(type).sort.last
       month = months(type, year).sort.last
-      date = dates(type, year, month).sort.last.split('.').first
-      Date.new year.to_i, month.to_i, date.to_i
+      date = dates(type, year, month).sort.last
+      Date.new year, month, date
     end
 
     def has_type?(type)

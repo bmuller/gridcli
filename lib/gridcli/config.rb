@@ -4,7 +4,6 @@ module GridCLI
       super "config"
     end
 
-
     def default_config
       { 
         'site' => "https://api.griddoor.com",

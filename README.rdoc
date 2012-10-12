@@ -35,6 +35,8 @@ To list the friends of a friend:
 To send a message to a list of users:
   grid message <username>[,<username>,...] [-s <subject>] [-b <body>] [-f <body file>]
 
+If you don't give a -b/-f option, an editor will open allowing you to type your message.
+
 To send a status update, like, or dislike to your friends:
   grid status <status message>
   grid like <like message>
@@ -89,6 +91,18 @@ You can then use the group as though it were a user.  For instance, to send a me
   grid message @mygroup -s "hey guys" -b "Let's go make a rum ham."
 
 If you prefer to simply edit the config file, you can do so (the file is located at ~/.grid/subgrids).
+
+== Aliases
+It's possible to create command aliases much like aliases in .gitconfig.  For instance, if you add a section to your ~/.grid/config file:
+  ...
+  alias:
+    recent: list all "yesterday to now"
+
+Then you can now run:
+  grid recent
+
+Which is the equivalent of running:
+  grid list all "yesterday to now"
 
 == Plugins
 Plugins are easy to create and can register hooks.  To install/uninstall a plugin, use:
