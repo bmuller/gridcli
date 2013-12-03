@@ -92,7 +92,7 @@ module GridCLI
     def search(type, query, start_date, end_date, output_format, fromuser=nil)
       options = output_format.nil? ? "" : "-o #{output_format}"
       files(type, start_date, end_date) { |path|
-        pipes = ["grep -Ri \"#{query}\" #{path}"]
+        pipes = ["grep -Rhi \"#{query}\" #{path}"]
         pipes << "grep '\"from_username\":\"#{fromuser}\"'" unless fromuser.nil?
         pipes << "#{$0} pprint #{options}"
         run pipes
